@@ -1,3 +1,4 @@
+from platformdirs import user_config_dir
 import datetime
 import os.path
 
@@ -10,30 +11,41 @@ from googleapiclient.errors import HttpError
 # If modifying these scopes, delete the file token.json.
 SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"]
 
+APP_NAME = "University_calendar_project"
 
 def main():
   """Shows basic usage of the Google Calendar API.
-  Prints the start and name of the next 10 events on the user's calendar.
-  """
-  creds = None
+
+  Prints the start and name of the next 10 events on the user's calendar."""
+
+  # Setup the config directory for long-lived user API tokens.
+  app_config_directory_path = user_config_dir(appname=APP_NAME, appauthor=False) # Get the OS-specific path of the app in the config directory.
+  # os.makedirs(app_config_directory_path, exist_ok=True) # If the path does not currently exist, create a directory at the path.
+  print("Test: " + app_config_directory_path) # Test.
+
   # The file token.json stores the user's access and refresh tokens, and is
   # created automatically when the authorization flow completes for the first
-  # time.
-  if os.path.exists("token.json"):
-    creds = Credentials.from_authorized_user_file("token.json", SCOPES)
+  # time. It is stored in the OS' default config directory so that sensitive
+  # keys are not added to the git.
+  creds = None
+
+  user_signed_in_token_json_path = os.path.join(app_config_directory_path, "token.json")
+  print("Test 2: " + user_signed_in_token_json_path) # Test.
+  if os.path.exists(user_signed_in_token_json_path):
+    creds = Credentials.from_authorized_user_file(user_signed_in_token_json_path, SCOPES)
+
   # If there are no (valid) credentials available, let the user log in.
   if not creds or not creds.valid:
     if creds and creds.expired and creds.refresh_token:
       creds.refresh(Request())
     else:
       credentials_path = os.getenv("University_calendar_project_google_calendar_api_credentials_path")
-      print("BLAH BLAH BLAH " + credentials_path)
       flow = InstalledAppFlow.from_client_secrets_file(
           credentials_path, SCOPES
       )
       creds = flow.run_local_server(port=0)
     # Save the credentials for the next run
-    with open("token.json", "w") as token:
+    with open(user_signed_in_token_json_path, "w") as token:
       token.write(creds.to_json())
 
   try:
