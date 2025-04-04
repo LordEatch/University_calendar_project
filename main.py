@@ -12,7 +12,8 @@ def main() -> None:
     moodle_calendar_path: str = os.path.join(TEMPORARY_DIRECTORY_NAME, MOODLE_CALENDAR_FILENAME)
     file_download.download_https_file(MOODLE_CALENDAR_URL, moodle_calendar_path)
 
-    # Need to change this so that the ics file gets downloaded to a different folder to avoid posting my timetable to github.
+    # Need to change this so that the ics file gets downloaded to a different folder to avoid
+    # posting my timetable to github. DO NOT stage a future downloaded calendar!
 
 if __name__ == "__main__":
     main()
