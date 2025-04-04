@@ -15,5 +15,8 @@ def main() -> None:
     # Need to change this so that the ics file gets downloaded to a different folder to avoid
     # posting my timetable to github. DO NOT stage a future downloaded calendar!
 
+    # Also to simplify setup, the url should be entered in a UI and stored either as an
+    # environment variable or in a json file in the config folder (see google_calendar.py).
+
 if __name__ == "__main__":
     main()
