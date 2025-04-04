@@ -18,10 +18,7 @@ def main():
 
   Prints the start and name of the next 10 events on the user's calendar."""
 
-  # Setup the config directory for long-lived user API tokens.
   app_config_directory_path = user_config_dir(appname=APP_NAME, appauthor=False) # Get the OS-specific path of the app in the config directory.
-  # os.makedirs(app_config_directory_path, exist_ok=True) # If the path does not currently exist, create a directory at the path.
-  print("Test: " + app_config_directory_path) # Test.
 
   # The file token.json stores the user's access and refresh tokens, and is
   # created automatically when the authorization flow completes for the first
@@ -30,7 +27,6 @@ def main():
   creds = None
 
   user_signed_in_token_json_path = os.path.join(app_config_directory_path, "token.json")
-  print("Test 2: " + user_signed_in_token_json_path) # Test.
   if os.path.exists(user_signed_in_token_json_path):
     creds = Credentials.from_authorized_user_file(user_signed_in_token_json_path, SCOPES)
 
