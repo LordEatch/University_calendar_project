@@ -1,3 +1,16 @@
+from ics import Calendar
+
+def get_events_from_file(ics_file_path):
+    with open(ics_file_path) as ics_file:
+        lines = ics_file.read()
+
+    calendar = Calendar(lines)
+
+    for e in calendar.events:
+        print(e.name)
+
+get_events_from_file("moodle_calendar.ics")
+
 def get_events_by_summaries(file_path, summaries):
     event_beginning = 'BEGIN:VEVENT\n'
     event_end = 'END:VEVENT\n'

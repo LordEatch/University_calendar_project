@@ -1,5 +1,4 @@
 from platformdirs import user_config_dir
-import datetime
 import os.path
 
 from google.auth.transport.requests import Request
@@ -7,7 +6,7 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 
-SCOPES = ["https://www.googleapis.com/auth/calendar"] # If modifying these scopes, delete the file token.json.
+SCOPES = ["https://www.googleapis.com/auth/calendar"] # If modifying these scopes, delete the file token.json in the config directory.
 
 def main():
   service = None
