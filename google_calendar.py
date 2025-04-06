@@ -1,5 +1,6 @@
 import os.path
 from config import app_config_directory_path
+import arrow
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -44,18 +45,19 @@ def build_service():
   return build("calendar", "v3", credentials=get_user_credentials())
 
 def add_event(service, calendar_id, event):
-  event = {
-        'summary': 'Sample Event',
-        'location': 'University of Glasgow',
-        'description': 'A sample event created via the Google Calendar API.',
-        'start': {
-            'dateTime': '2025-04-07T10:00:00',
-            'timeZone': 'Europe/London',
+  new_event = {
+        "summary": event.name,
+        "location": event.location,
+        "description": event.description,
+        "start": {
+            "dateTime": event.begin.isoformat(),
         },
-        'end': {
-            'dateTime': '2025-04-07T11:00:00',
-            'timeZone': 'Europe/London',
+        "end": {
+            "dateTime": event.end.isoformat(),
         },
     }
-
-  event = service.events().insert(calendarId=calendar_id, body=event).execute()
+  
+  print("Attempting to add the following event to Google Calendar:")
+  print(new_event)
+  new_event = service.events().insert(calendarId=calendar_id, body=new_event).execute()
+  print("Event successfully added.")
