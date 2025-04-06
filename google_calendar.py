@@ -6,11 +6,11 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 
+
 SCOPES = ["https://www.googleapis.com/auth/calendar"] # If modifying these scopes, delete the file token.json in the config directory.
 
-def main():
-  service = None
 
+def build_service():
   # WARNING NEED TO UPDATE THIS SO THAT IT TAKES A USER AS AN ARGUMENT TO ALLOW MULTIPLE USERS.
   def get_user_credentials():
     """Get the credentials needed to manipulate a user's calendar."""
@@ -45,26 +45,21 @@ def main():
     
     return creds
 
-  def add_event():
-    event = {
-          'summary': 'Sample Event',
-          'location': 'University of Glasgow',
-          'description': 'A sample event created via the Google Calendar API.',
-          'start': {
-              'dateTime': '2025-04-07T10:00:00',
-              'timeZone': 'Europe/London',
-          },
-          'end': {
-              'dateTime': '2025-04-07T11:00:00',
-              'timeZone': 'Europe/London',
-          },
-      }
+  return build("calendar", "v3", credentials=get_user_credentials())
 
-    event = service.events().insert(calendarId='primary', body=event).execute()
+def add_event(service):
+  event = {
+        'summary': 'Sample Event',
+        'location': 'University of Glasgow',
+        'description': 'A sample event created via the Google Calendar API.',
+        'start': {
+            'dateTime': '2025-04-07T10:00:00',
+            'timeZone': 'Europe/London',
+        },
+        'end': {
+            'dateTime': '2025-04-07T11:00:00',
+            'timeZone': 'Europe/London',
+        },
+    }
 
-  service = build("calendar", "v3", credentials=get_user_credentials())
-
-  add_event()
-
-if __name__ == "__main__":
-  main()
+  event = service.events().insert(calendarId='primary', body=event).execute()
