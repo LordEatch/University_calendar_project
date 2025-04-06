@@ -16,9 +16,12 @@ def download_https_file(file_url, download_file_location, credentials=None):
         response = get(file_url, auth=HTTPBasicAuth(username, password)) # Make a GET request with authentication.
 
     if response.status_code == 200: # If the request was successful...
-        # Save the file.
-        with open(download_file_location, 'wb') as file:
-            file.write(response.content)
-        print(f'{download_file_location} downloaded successfully!')
+        try:
+            # Save the file.
+            with open(download_file_location, 'wb') as file:
+                file.write(response.content)
+            print(f'{download_file_location} downloaded successfully!')
+        except:
+            print(f"ERROR. Could not save downloaded file to {download_file_location}. Does the path contain an incorrect or missing directory?")
     else:
         print(f'Failed to download the file. Status code: {response.status_code}')

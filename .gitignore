@@ -1,14 +1,14 @@
-# Byte-compiled / optimized / DLL files
+# Byte-compiled / optimized / DLL files.
 __pycache__/
 *.py[cod]
 *$py.class
 
-# Virtual environment folders (if you use venv)
+# Virtual environment folders (if you use venv).
 venv/
 env/
 .venv/
 
-# macOS, Linux, Windows system files
+# macOS, Linux, Windows system files.
 .DS_Store
 Thumbs.db
 
@@ -16,5 +16,5 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Jupyter notebook checkpoints
+# Jupyter notebook checkpoints.
 .ipynb_checkpoints/

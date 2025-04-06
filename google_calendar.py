@@ -1,5 +1,5 @@
-from platformdirs import user_config_dir
 import os.path
+from config import app_config_directory_path
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -14,10 +14,6 @@ def build_service():
   # WARNING NEED TO UPDATE THIS SO THAT IT TAKES A USER AS AN ARGUMENT TO ALLOW MULTIPLE USERS.
   def get_user_credentials():
     """Get the credentials needed to manipulate a user's calendar."""
-
-    APP_NAME = "University_calendar_project"
-
-    app_config_directory_path = user_config_dir(appname=APP_NAME, appauthor=False) # Get the OS-specific path of the app in the config directory.
 
     # The file token.json stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
@@ -47,7 +43,7 @@ def build_service():
 
   return build("calendar", "v3", credentials=get_user_credentials())
 
-def add_event(service):
+def add_event(service, calendar_id, event):
   event = {
         'summary': 'Sample Event',
         'location': 'University of Glasgow',
@@ -62,4 +58,4 @@ def add_event(service):
         },
     }
 
-  event = service.events().insert(calendarId='primary', body=event).execute()
+  event = service.events().insert(calendarId=calendar_id, body=event).execute()
