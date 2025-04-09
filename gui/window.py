@@ -1,12 +1,13 @@
 import tkinter as tk
 from tkinter import ttk
+from ..config import APP_NAME
 from pages.moodle import Moodle
 from pages.google_calendar import GoogleCalendar
 
 class Window(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("TEST")
+        self.title(APP_NAME)
         self.geometry("800x600")
         
         # Create main container with navigation bar at top and content below.
