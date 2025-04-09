@@ -11,8 +11,8 @@ from uni_cal_pro.file_download import download_https_file
 def get_moodle_calendar_events(moodle_calendar_url):
     """Return a list of events from an ics file endpoint."""
 
-    def download_moodle_calendar(moodle_calendar_url):
-        """Download a file at the url download_moodle_calendar and store it in the app's temporary directory.
+    def download_temporary_file(file_url, new_file_name):
+        """Download a file at the url file_url and store it in the app's temporary directory.
         
         Return the path of the file."""
 
@@ -42,17 +42,15 @@ def get_moodle_calendar_events(moodle_calendar_url):
                 print(f'Failed to download the file. Status code: {response.status_code}')
 
 
-        # In future change MOODLE_CALENDAR_FILENAME to include the app name to make the file more recognisable.
-        MOODLE_CALENDAR_FILENAME = "moodle_calendar.ics"
-
         # Download the Moodle calendar to the app's temp folder.
-        moodle_calendar_path = os.path.join(app_temp_directory_path, MOODLE_CALENDAR_FILENAME)
-        download_https_file(moodle_calendar_url, moodle_calendar_path)
+        temp_file_path = os.path.join(app_temp_directory_path, new_file_name)
+        download_https_file(file_url, temp_file_path)
 
         # Return the path that the file was downloaded to.
-        return moodle_calendar_path
+        return temp_file_path
 
-    moodle_calendar_path = download_moodle_calendar(moodle_calendar_url)
+
+    moodle_calendar_path = download_temporary_file(moodle_calendar_url, "moodle_calendar.ics")
 
     with open(moodle_calendar_path) as moodle_calendar:
         text = moodle_calendar.read()
