@@ -1,8 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
-from ..config import APP_NAME
-from pages.moodle import Moodle
-from pages.google_calendar import GoogleCalendar
+from uni_cal_pro.config import APP_NAME
+from uni_cal_pro.gui.pages.moodle import Moodle
+from uni_cal_pro.gui.pages.google_calendar import GoogleCalendar
 
 class Window(tk.Tk):
     def __init__(self):
@@ -60,7 +60,6 @@ class Window(tk.Tk):
         elif page_name == GoogleCalendar.__name__:
             self.google_calendar_btn.state(["disabled"])
 
-# Run the application
-if __name__ == "__main__":
+def main():
     app = Window()
     app.mainloop()

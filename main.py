@@ -1,9 +1,9 @@
 from ics import Calendar
 import os
-from config import app_temp_directory_path
-from file_download import download_https_file
-from google_calendar import build_service, event_exists, add_event
-
+from uni_cal_pro.config import app_temp_directory_path
+from uni_cal_pro.file_download import download_https_file
+from uni_cal_pro.google_calendar import build_service, event_exists, add_event
+import uni_cal_pro.gui.window as gui_window
 
 TEST = "https://moodle.gla.ac.uk/calendar/export_execute.php?userid=287433&authtoken=98b8a04f638b0916b19f18e1431e6b58311df1b4&preset_what=all&preset_time=recentupcoming"
 
@@ -55,9 +55,7 @@ def main():
     # Add all of the Moodle calendar events to Google Calendar.
     add_events_to_google_calendar(service, "7a26e32ba78d04c90e76e231e21ee6ceffe3da91a80f049da72475522cf50ff2@group.calendar.google.com", events)
 
-
-    # Also to simplify setup, the url should be entered in a UI and stored either as an
-    # environment variable or in a json file in the config folder (see google_calendar.py).
+    gui_window.main()
 
 if __name__ == "__main__":
     main()

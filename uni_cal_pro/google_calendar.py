@@ -1,5 +1,5 @@
 import os.path
-from config import app_config_directory_path
+from uni_cal_pro.config import app_config_directory_path
 from datetime import timedelta
 
 from google.auth.transport.requests import Request
