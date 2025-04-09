@@ -1,8 +1,10 @@
 import tkinter as tk
 from tkinter import ttk
+
 from uni_cal_pro.config import APP_NAME
-from uni_cal_pro.gui.pages.moodle import Moodle
 from uni_cal_pro.gui.pages.google_calendar import GoogleCalendar
+from uni_cal_pro.gui.pages.moodle import Moodle
+
 
 class Window(tk.Tk):
     def __init__(self):

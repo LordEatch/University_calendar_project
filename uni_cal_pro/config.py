@@ -1,6 +1,8 @@
+import os
+
 from platformdirs import user_config_dir
 from tempfile import gettempdir
-import os
+
 
 # NOTE All of the code below will execute whenever this file is ran but also when it is imported (which is intentional).
 

@@ -1,11 +1,12 @@
 import os.path
-from uni_cal_pro.config import app_config_directory_path
 from datetime import timedelta
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
+
+from uni_cal_pro.config import app_config_directory_path
 
 
 SCOPES = ["https://www.googleapis.com/auth/calendar"] # If modifying these scopes, delete the file token.json in the config directory.

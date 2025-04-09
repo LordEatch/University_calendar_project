@@ -1,9 +1,12 @@
-from ics import Calendar
 import os
+
+from ics import Calendar
+
 from uni_cal_pro.config import app_temp_directory_path
 from uni_cal_pro.file_download import download_https_file
 from uni_cal_pro.google_calendar import build_service, event_exists, add_event
 import uni_cal_pro.gui.window as gui_window
+
 
 TEST = "https://moodle.gla.ac.uk/calendar/export_execute.php?userid=287433&authtoken=98b8a04f638b0916b19f18e1431e6b58311df1b4&preset_what=all&preset_time=recentupcoming"
 
