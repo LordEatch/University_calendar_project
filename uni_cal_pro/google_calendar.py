@@ -45,38 +45,53 @@ def build_service():
 
   return build("calendar", "v3", credentials=get_user_credentials())
 
-def event_exists(service, calendar_id, event):
-  events_result = service.events().list(
-      calendarId=calendar_id,
-      # Add a time delta to these to allow Google Calendar to search within the window.
-      timeMin=(event.begin - timedelta(minutes=1)).isoformat(),
-      timeMax=(event.end + timedelta(minutes=1)).isoformat(),
-      maxResults=1,
-      # singleEvents ensures that recurring events are treated as individual events, rather than a single master event happening once.
-      singleEvents=True,
-  ).execute()
-  events = events_result.get('items', [])
+# WARNING THIS IS NOT FINAL AS NO EVENT WILL BE ADDED AT THE SAME TIME AS ANOTHER, EVEN IF IT IS DIFFERENT! CHANGE event_exists.
+def add_events_to_google_calendar(service, calendar_id, events):
+  """Add a list of events to Google Calendar. Do not overwrite/duplicate events existing in the same calendar at the same time."""
 
-  if events:
-    return True
-  else:
-    return False
+  def event_exists(service, calendar_id, event):
+    events_result = service.events().list(
+        calendarId=calendar_id,
+        # Add a time delta to these to allow Google Calendar to search within the window.
+        timeMin=(event.begin - timedelta(minutes=1)).isoformat(),
+        timeMax=(event.end + timedelta(minutes=1)).isoformat(),
+        maxResults=1,
+        # singleEvents ensures that recurring events are treated as individual events, rather than a single master event happening once.
+        singleEvents=True,
+    ).execute()
+    events = events_result.get('items', [])
 
-def add_event(service, calendar_id, event):
-  new_event = {
-    "summary": event.name,
-    "location": event.location,
-    "description": event.description,
-    "start": {
-      "dateTime": event.begin.isoformat(),
-    },
-    "end": {
-      "dateTime": event.end.isoformat(),
-    },
-  }
-  
-  try:
-    service.events().insert(calendarId=calendar_id, body=new_event).execute()
-  except:
-    print("ERROR. Could not add the following event to Google Calendar:")
-    print(new_event)
+    if events:
+      return True
+    else:
+      return False
+
+  def add_event_to_google_calendar(service, calendar_id, event):
+    new_event = {
+      "summary": event.name,
+      "location": event.location,
+      "description": event.description,
+      "start": {
+        "dateTime": event.begin.isoformat(),
+      },
+      "end": {
+        "dateTime": event.end.isoformat(),
+      },
+    }
+    
+    try:
+      service.events().insert(calendarId=calendar_id, body=new_event).execute()
+    except:
+      print("ERROR. Could not add the following event to Google Calendar:")
+      print(new_event)
+
+
+  event_tally = 0
+
+  for event in events:
+      # Check if the event already exists.
+      if not event_exists(service, calendar_id, event):
+          add_event_to_google_calendar(service, calendar_id, event)
+          event_tally += 1
+      
+  print(f"{event_tally} events added to Google Calendar.")

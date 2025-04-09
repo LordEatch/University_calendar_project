@@ -5,7 +5,6 @@ import os
 from ics import Calendar
 
 from uni_cal_pro.config import app_temp_directory_path
-from uni_cal_pro.file_download import download_https_file
 
 
 def get_moodle_calendar_events(moodle_calendar_url):
